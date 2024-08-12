@@ -1,9 +1,11 @@
-import 'package:bloc_example_app/bloc/counter_bloc.dart';
-import 'package:bloc_example_app/cubit/counter_cubit.dart';
+import 'package:bloc_example_app/add_todo_screen.dart';
+import 'package:bloc_example_app/cubit/todo_cubit.dart';
+import 'package:bloc_example_app/model/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyHomePage extends StatelessWidget {
+  static const String id = "MyHomePage";
   const MyHomePage({super.key, required this.title});
 
   final String title;
@@ -15,44 +17,32 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: BlocBuilder<CounterBloc, int>(builder: (context, count) {
+      body: BlocBuilder<TodoCubit, List<ToDo>>(builder: (context, count) {
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$count',
-                style: Theme.of(context).textTheme.headlineMedium,
+              Expanded(
+                child: ListView.builder(
+                  itemCount: count.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(count[index].name),
+                    );
+                  },
+                ),
               ),
             ],
           ),
         );
       }),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              context.read<CounterBloc>().add(CounterIncrement());
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          if (context.watch<CounterBloc>().state > 0)
-            FloatingActionButton(
-              onPressed: (){
-                context.read<CounterBloc>().add(CounterDecrement());
-              },
-              tooltip: 'Dec',
-              child: const Icon(Icons.remove),
-            ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(AddTodoScreen.id);
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }

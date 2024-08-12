@@ -1,5 +1,5 @@
-import 'package:bloc_example_app/bloc/counter_bloc.dart';
-import 'package:bloc_example_app/cubit/counter_cubit.dart';
+import 'package:bloc_example_app/add_todo_screen.dart';
+import 'package:bloc_example_app/cubit/todo_cubit.dart';
 import 'package:bloc_example_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,18 +13,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: MultiBlocProvider(
+    return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => CounterCubit()),
-            BlocProvider(create: (context) => CounterBloc()),
+            BlocProvider(create: (context) => TodoCubit()),
           ],
-          child: const MyHomePage(title: 'Flutter Demo Home Page'),
-        ));
+      child: MaterialApp(
+          title: 'Flutter Demo',
+          routes: {
+            MyHomePage.id: (context) => const MyHomePage(title: "ToDo"),
+            AddTodoScreen.id: (context) => const AddTodoScreen(),
+          },
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const MyHomePage(title: 'ToDo')),
+    );
   }
 }
