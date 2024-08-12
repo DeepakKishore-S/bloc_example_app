@@ -1,3 +1,4 @@
+import 'package:bloc_example_app/bloc/counter_bloc.dart';
 import 'package:bloc_example_app/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: BlocBuilder<CounterCubit, int>(builder: (context, count) {
+      body: BlocBuilder<CounterBloc, int>(builder: (context, count) {
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -34,16 +35,20 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: context.read<CounterCubit>().increment,
+            onPressed: () {
+              context.read<CounterBloc>().add(CounterIncrement());
+            },
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
           const SizedBox(
             width: 5,
           ),
-          if(context.watch<CounterCubit>().state > 0)
+          if (context.watch<CounterBloc>().state > 0)
             FloatingActionButton(
-              onPressed: context.read<CounterCubit>().decrement,
+              onPressed: (){
+                context.read<CounterBloc>().add(CounterDecrement());
+              },
               tooltip: 'Dec',
               child: const Icon(Icons.remove),
             ),

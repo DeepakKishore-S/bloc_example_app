@@ -1,3 +1,4 @@
+import 'package:bloc_example_app/bloc/counter_bloc.dart';
 import 'package:bloc_example_app/cubit/counter_cubit.dart';
 import 'package:bloc_example_app/home.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,11 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: BlocProvider(
-          create: (context) => CounterCubit(),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => CounterCubit()),
+            BlocProvider(create: (context) => CounterBloc()),
+          ],
           child: const MyHomePage(title: 'Flutter Demo Home Page'),
         ));
   }
