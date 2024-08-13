@@ -9,3 +9,5 @@ class LoginAction extends AuthEvent {
 
   LoginAction({required this.email, required this.password});
 }
+
+class LogoutAction extends AuthEvent{}
