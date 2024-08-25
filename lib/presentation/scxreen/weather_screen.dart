@@ -56,7 +56,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             );
           }
 
-          final data = (state as WeatherSuccess).weatherData;
+          final data = (state).weatherData;
 
           final currentWeatherData = data.list[0];
 
@@ -185,3 +185,5 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 }
+
+abstract interface class Apple {}
